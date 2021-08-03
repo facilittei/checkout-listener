@@ -1,17 +1,17 @@
-package adapters
+package runners
 
 import (
 	"github.com/aws/aws-lambda-go/lambda"
-	"github.com/facilittei/checkout-listener/ports"
+	"github.com/facilittei/checkout-listener/adapters/handlers"
 )
 
 // Lambda AWS
 type Lambda struct {
-	Handler ports.Serverless
+	Handler handlers.Handler
 }
 
 // NewLambda creates a new lambda instance
-func NewLambda(handler ports.Serverless) *Lambda {
+func NewLambda(handler handlers.Handler) *Lambda {
 	return &Lambda{Handler: handler}
 }
 

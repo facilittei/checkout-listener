@@ -1,11 +1,14 @@
 package main
 
-import "github.com/aws/aws-lambda-go/lambda"
-
-func handler() (string, error) {
-	return "Hello world", nil
-}
+import (
+	"github.com/facilittei/checkout-listener/adapters"
+	"github.com/facilittei/checkout-listener/core/services"
+	"github.com/facilittei/checkout-listener/ports"
+)
 
 func main() {
-	lambda.Start(handler)
+	payment := services.NewPayment()
+	handler := ports.NewSQS(payment)
+	app := adapters.NewLambda(handler)
+	app.Run()
 }

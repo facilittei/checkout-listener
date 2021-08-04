@@ -1,6 +1,6 @@
 package entities
 
-// Message order requested to be processed by a payment gateway
+// Message has a payment request
 type Message struct {
 	ID   string `json:"id"`
 	Body string `json:"body"`

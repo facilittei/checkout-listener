@@ -7,11 +7,11 @@ import (
 
 // Lambda AWS
 type Lambda struct {
-	Handler handlers.Handler
+	Handler handlers.AppHandler
 }
 
 // NewLambda creates a new lambda instance
-func NewLambda(handler handlers.Handler) *Lambda {
+func NewLambda(handler handlers.AppHandler) *Lambda {
 	return &Lambda{Handler: handler}
 }
 

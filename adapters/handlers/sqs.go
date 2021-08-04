@@ -5,7 +5,7 @@ import (
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/facilittei/checkout-listener/core/entities"
-	"github.com/facilittei/checkout-listener/core/services/contracts"
+	"github.com/facilittei/checkout-listener/core/features/contracts"
 )
 
 // SQS queue

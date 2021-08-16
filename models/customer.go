@@ -1,4 +1,4 @@
-package entities
+package models
 
 // Customer that is making a payment
 type Customer struct {

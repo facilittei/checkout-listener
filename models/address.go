@@ -1,4 +1,4 @@
-package entities
+package models
 
 // Address information
 type Address struct {

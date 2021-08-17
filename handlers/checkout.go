@@ -2,6 +2,8 @@ package handlers
 
 import (
 	"context"
+	"fmt"
+	"os"
 
 	"github.com/facilittei/checkout-listener/services"
 )
@@ -20,5 +22,5 @@ func NewCheckout(paymentSrv services.PaymentContract) *Checkout {
 
 // Handle events requests
 func (checkoutHandler *Checkout) Handle(ctx context.Context, params interface{}) (string, error) {
-	return "It is working!", nil
+	return fmt.Sprintf("Version: %v", os.Getenv("VERSION")), nil
 }

@@ -21,11 +21,10 @@ jobs:
         with:
           go-version: ${{ matrix.go-version }}
       
-      - name: Build
-        run: GOOS=linux GOARCH=amd64 go build -o main ./cmd/server/main.go
-
-      - name: Zip
-        run: zip -r main.zip main
+      - name: Build & Zip
+        run: |
+          GOOS=linux GOARCH=amd64 go build -o main ./cmd/server/main.go
+          zip -r main.zip main
 
       - name: AWS Lambda Deploy
         uses: appleboy/lambda-action@master

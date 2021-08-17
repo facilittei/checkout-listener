@@ -20,5 +20,5 @@ func NewCheckout(paymentSrv services.PaymentContract) *Checkout {
 
 // Handle events requests
 func (checkoutHandler *Checkout) Handle(ctx context.Context, params interface{}) (string, error) {
-	return "It worked!", nil
+	return "It is working!", nil
 }

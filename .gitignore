@@ -1,4 +1,5 @@
 .git
 .vscode
 main.zip
+main
 **/*.DS_Store

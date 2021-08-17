@@ -1,4 +1,4 @@
-package server
+package main
 
 import (
 	"github.com/aws/aws-lambda-go/lambda"
@@ -7,16 +7,7 @@ import (
 	"github.com/facilittei/checkout-listener/services"
 )
 
-// Lambda AWS
-type Lambda struct{}
-
-// NewLambda instance
-func NewLambda() *Lambda {
-	return &Lambda{}
-}
-
-// Start application
-func (app *Lambda) Start() {
+func main() {
 	messageGtw := gateways.NewSQS()
 	paymentSvc := services.NewPayment(messageGtw)
 	checkoutHandler := handlers.NewCheckout(paymentSvc)

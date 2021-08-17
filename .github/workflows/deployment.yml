@@ -1,6 +1,9 @@
 name: Deployment
 
-on: [push]
+on:
+  push:
+    branches:
+      - "main"
 
 jobs:
   deploy:
@@ -9,7 +12,6 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: AWS Lambda Deploy
-        if: github.ref == 'refs/heads/master'
         uses: appleboy/lambda-action@master
         with:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}

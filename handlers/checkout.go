@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"context"
-	"log"
 
 	"github.com/facilittei/checkout-listener/services"
 )
@@ -20,7 +19,6 @@ func NewCheckout(paymentSrv services.PaymentContract) *Checkout {
 }
 
 // Handle events requests
-func (checkoutHandler *Checkout) Handle(ctx context.Context, params interface{}) error {
-	log.Println("It worked!")
-	return nil
+func (checkoutHandler *Checkout) Handle(ctx context.Context, params interface{}) (string, error) {
+	return "It worked!", nil
 }

@@ -3,10 +3,12 @@ package handlers
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/facilittei/checkout-listener/services"
 )
+
+// Version of the application handler
+var Version = "dev"
 
 // Checkout events
 type Checkout struct {
@@ -22,5 +24,5 @@ func NewCheckout(paymentSrv services.PaymentContract) *Checkout {
 
 // Handle events requests
 func (checkoutHandler *Checkout) Handle(ctx context.Context, params interface{}) (string, error) {
-	return fmt.Sprintf("Version: %v", os.Getenv("VERSION")), nil
+	return fmt.Sprintf("Version: %v", Version), nil
 }

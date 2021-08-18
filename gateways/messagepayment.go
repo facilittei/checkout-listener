@@ -26,7 +26,7 @@ func (sqs *SQS) GetPayments(params interface{}) []models.Payment {
 	log.Println(v.Type())
 	log.Println(v.Kind())
 
-	if evt, ok := params.(*events.SQSEvent); ok {
+	if evt, ok := params.(events.SQSEvent); ok {
 		for _, message := range evt.Records {
 			var payment models.Payment
 			json.Unmarshal([]byte(message.Body), &payment)

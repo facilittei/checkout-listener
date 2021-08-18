@@ -20,7 +20,9 @@ func NewSQS() *SQS {
 func (sqs *SQS) GetPayments(params interface{}) []models.Payment {
 	var payments []models.Payment
 
-	if evt, ok := params.(events.SQSEvent); ok {
+	log.Println(params.(*events.SQSEvent))
+
+	if evt, ok := params.(*events.SQSEvent); ok {
 		log.Println(evt)
 		for _, message := range evt.Records {
 			var payment models.Payment

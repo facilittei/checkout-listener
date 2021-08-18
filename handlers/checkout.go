@@ -30,6 +30,8 @@ func NewCheckout(messageGtw gateways.MessageContract, paymentSrv services.Paymen
 func (checkoutHandler *Checkout) Handle(ctx context.Context, params interface{}) (string, error) {
 	log.Println(params)
 	payments := checkoutHandler.MessageGtw.GetPayments(params)
-	log.Println(payments)
+	for _, payment := range payments {
+		log.Printf("description: %v, amount: %v, methods: %v", payment.Description, payment.Amount, payment.Methods)
+	}
 	return fmt.Sprintf("Version: %v", Version), nil
 }

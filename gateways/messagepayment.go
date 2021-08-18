@@ -3,10 +3,10 @@ package gateways
 import (
 	"encoding/json"
 	"log"
-	"reflect"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/facilittei/checkout-listener/models"
+	"github.com/mitchellh/mapstructure"
 )
 
 // SQS queue
@@ -20,17 +20,18 @@ func NewSQS() *SQS {
 // GetPayments SQS messages
 func (sqs *SQS) GetPayments(params interface{}) []models.Payment {
 	var payments []models.Payment
+	var sqsEvent events.SQSEvent
 
-	log.Println(reflect.ValueOf(params))
-	log.Println(reflect.ValueOf(params).Kind())
+	err := mapstructure.Decode(params, &sqsEvent)
+	if err != nil {
+		log.Printf("could not decode message interface: %v", err)
+		return payments
+	}
 
-	if evt, ok := params.(events.SQSEvent); ok {
-		log.Println(evt)
-		for _, message := range evt.Records {
-			var payment models.Payment
-			json.Unmarshal([]byte(message.Body), &payment)
-			payments = append(payments, payment)
-		}
+	for _, message := range sqsEvent.Records {
+		var payment models.Payment
+		json.Unmarshal([]byte(message.Body), &payment)
+		payments = append(payments, payment)
 	}
 
 	return payments

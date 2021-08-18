@@ -2,6 +2,8 @@ package gateways
 
 import (
 	"encoding/json"
+	"log"
+	"reflect"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/facilittei/checkout-listener/models"
@@ -18,6 +20,8 @@ func NewSQS() *SQS {
 // GetPayments SQS messages
 func (sqs *SQS) GetPayments(params interface{}) []models.Payment {
 	var payments []models.Payment
+
+	log.Println(reflect.TypeOf(params))
 
 	if evt, ok := params.(*events.SQSEvent); ok {
 		for _, message := range evt.Records {

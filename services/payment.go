@@ -31,6 +31,8 @@ func NewPayment(
 
 // Process payment
 func (paymentSvc Payment) Process(payment models.Payment) error {
+	paymentSvc.AuthRepository.StoreToken("abc1234")
+	log.Println(paymentSvc.AuthRepository.GetToken())
 	log.Println(payment)
 	return nil
 }

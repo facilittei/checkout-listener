@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 
@@ -15,6 +16,8 @@ import (
 )
 
 func main() {
+	ctx := context.Background()
+
 	cfg, err := config.Load(".")
 	if err != nil {
 		log.Fatal(err)
@@ -28,7 +31,7 @@ func main() {
 
 	httpHandler := adapters.NewHTTPResty()
 	messageGtw := gateways.NewSQS()
-	authRepository := repositories.NewAuthRedis(rdb)
+	authRepository := repositories.NewAuthRedis(ctx, rdb)
 	paymentSvc := services.NewPayment(cfg, httpHandler, authRepository)
 	checkoutHandler := handlers.NewCheckout(messageGtw, paymentSvc)
 	lambda.Start(checkoutHandler.Handle)

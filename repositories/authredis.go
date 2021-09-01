@@ -1,25 +1,36 @@
 package repositories
 
-import "github.com/go-redis/redis/v8"
+import (
+	"context"
+	"time"
+
+	"github.com/go-redis/redis/v8"
+)
 
 // AuthRedis to manage authentication tokens on Redis
 type AuthRedis struct {
-	DB *redis.Client
+	Ctx context.Context
+	DB  *redis.Client
 }
 
 // NewAuthRedis creates a new instance of a auth redis repository
-func NewAuthRedis(db *redis.Client) AuthContract {
+func NewAuthRedis(ctx context.Context, db *redis.Client) AuthContract {
 	return &AuthRedis{
-		DB: db,
+		Ctx: ctx,
+		DB:  db,
 	}
 }
 
 // GetToken authentication stored in redis
-func (authRedis *AuthRedis) GetToken(token string) (string, error) {
-	return "", nil
+func (authRedis *AuthRedis) GetToken() (string, error) {
+	result, err := authRedis.DB.Get(authRedis.Ctx, "token").Result()
+	if err != nil {
+		return "", err
+	}
+	return result, nil
 }
 
 // StoreToken authentication in redis
 func (authRedis *AuthRedis) StoreToken(token string) error {
-	return nil
+	return authRedis.DB.Set(authRedis.Ctx, "token", token, time.Hour).Err()
 }

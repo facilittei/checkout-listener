@@ -3,3 +3,4 @@
 main.zip
 main
 **/*.DS_Store
+application.env

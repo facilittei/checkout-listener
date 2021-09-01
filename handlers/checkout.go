@@ -31,7 +31,7 @@ func (checkoutHandler *Checkout) Handle(ctx context.Context, params interface{})
 	log.Println(params)
 	payments := checkoutHandler.MessageGtw.GetPayments(params)
 	for _, payment := range payments {
-		log.Printf("description: %v, amount: %v, methods: %v", payment.Description, payment.Amount, payment.Methods)
+		log.Printf("%+v", &payment)
 	}
 	return fmt.Sprintf("Version: %v", Version), nil
 }

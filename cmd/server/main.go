@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/aws/aws-lambda-go/lambda"
@@ -8,7 +9,9 @@ import (
 	"github.com/facilittei/checkout-listener/config"
 	"github.com/facilittei/checkout-listener/gateways"
 	"github.com/facilittei/checkout-listener/handlers"
+	"github.com/facilittei/checkout-listener/repositories"
 	"github.com/facilittei/checkout-listener/services"
+	"github.com/go-redis/redis/v8"
 )
 
 func main() {
@@ -17,9 +20,16 @@ func main() {
 		log.Fatal(err)
 	}
 
+	rdb := redis.NewClient(&redis.Options{
+		Addr:     fmt.Sprintf("%s:%s", cfg.RedisHost, cfg.RedisPort),
+		Password: "",
+		DB:       0,
+	})
+
 	httpHandler := adapters.NewHTTPResty()
 	messageGtw := gateways.NewSQS()
-	paymentSvc := services.NewPayment(cfg, httpHandler)
+	authRepository := repositories.NewAuthRedis(rdb)
+	paymentSvc := services.NewPayment(cfg, httpHandler, authRepository)
 	checkoutHandler := handlers.NewCheckout(messageGtw, paymentSvc)
 	lambda.Start(checkoutHandler.Handle)
 }

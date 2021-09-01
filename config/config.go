@@ -2,7 +2,6 @@ package config
 
 import (
 	"fmt"
-	"os"
 	"reflect"
 
 	"github.com/spf13/viper"
@@ -11,6 +10,8 @@ import (
 // Config settings
 type Config struct {
 	PaymentGatewayURL string `mapstructure:"PAYMENT_GATEWAY_URL" required:"true"`
+	RedisHost         string `mapstructure:"REDIS_HOST" required:"true"`
+	RedisPort         string `mapstructure:"REDIS_PORT" required:"true"`
 }
 
 // Load configuration from environment
@@ -41,6 +42,8 @@ func Load(path string) (Config, error) {
 // loadFromEnvironment when there is no .env file provided
 func loadFromEnvironment(cfg *Config) {
 	cfg.PaymentGatewayURL = viper.GetString("PAYMENT_GATEWAY_URL")
+	cfg.RedisHost = viper.GetString("REDIS_HOST")
+	cfg.RedisPort = viper.GetString("REDIS_PORT")
 }
 
 // validateEnvironment checks whether all required variables are presented
@@ -52,9 +55,9 @@ func validateEnvironment(cfg Config) error {
 		tag := property.Tag
 		environment := tag.Get("mapstructure")
 		required := tag.Get("required")
-		value := os.Getenv(environment)
+		value := reflect.ValueOf(cfg).Field(i)
 
-		if value == "" && required == "true" {
+		if value.String() == "" && required == "true" {
 			return fmt.Errorf("%s is required", environment)
 		}
 	}

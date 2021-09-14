@@ -32,7 +32,14 @@ func main() {
 	httpHandler := adapters.NewHTTPResty()
 	messageGtw := gateways.NewSQS()
 	authRepository := repositories.NewAuthRedis(ctx, rdb)
-	paymentSvc := services.NewPayment(cfg, httpHandler, authRepository)
+	authToken := handlers.NewAuth(cfg, httpHandler, authRepository)
+
+	headers, err := authToken.GetCredentials()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	paymentSvc := services.NewPayment(cfg, httpHandler, headers)
 	checkoutHandler := handlers.NewCheckout(messageGtw, paymentSvc)
 	lambda.Start(checkoutHandler.Handle)
 }

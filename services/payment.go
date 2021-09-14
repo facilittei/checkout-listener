@@ -6,32 +6,29 @@ import (
 	"github.com/facilittei/checkout-listener/adapters"
 	"github.com/facilittei/checkout-listener/config"
 	"github.com/facilittei/checkout-listener/models"
-	"github.com/facilittei/checkout-listener/repositories"
 )
 
 // Payment gateway
 type Payment struct {
-	Config         config.Config
-	HTTPHandler    adapters.HTTPContract
-	AuthRepository repositories.AuthContract
+	Config      config.Config
+	HTTPHandler adapters.HTTPContract
+	Headers     map[string]string
 }
 
 // NewPayment creates a new instance of a payment intent
 func NewPayment(
 	config config.Config,
 	httpHandler adapters.HTTPContract,
-	authRepository repositories.AuthContract,
-) PaymentContract {
+	headers map[string]string) PaymentContract {
 	return &Payment{
-		Config:         config,
-		HTTPHandler:    httpHandler,
-		AuthRepository: authRepository,
+		Config:      config,
+		HTTPHandler: httpHandler,
+		Headers:     headers,
 	}
 }
 
 // Process payment
 func (paymentSvc Payment) Process(payment models.Payment) error {
-	paymentSvc.AuthRepository.StoreToken("abc1234")
-	log.Println(paymentSvc.AuthRepository.GetToken())
+	log.Println(payment)
 	return nil
 }

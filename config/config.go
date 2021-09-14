@@ -9,9 +9,11 @@ import (
 
 // Config settings
 type Config struct {
-	PaymentGatewayURL string `mapstructure:"PAYMENT_GATEWAY_URL" required:"true"`
-	RedisHost         string `mapstructure:"REDIS_HOST" required:"true"`
-	RedisPort         string `mapstructure:"REDIS_PORT" required:"true"`
+	PaymentGatewayURL   string `mapstructure:"PAYMENT_GATEWAY_URL" required:"true"`
+	PaymentGatewayAuth  string `mapstructure:"PAYMENT_GATEWAY_AUTH" required:"true"`
+	PaymentGatewayToken string `mapstructure:"PAYMENT_GATEWAY_TOKEN" required:"true"`
+	RedisHost           string `mapstructure:"REDIS_HOST" required:"true"`
+	RedisPort           string `mapstructure:"REDIS_PORT" required:"true"`
 }
 
 // Load configuration from environment
@@ -42,6 +44,8 @@ func Load(path string) (Config, error) {
 // loadFromEnvironment when there is no .env file provided
 func loadFromEnvironment(cfg *Config) {
 	cfg.PaymentGatewayURL = viper.GetString("PAYMENT_GATEWAY_URL")
+	cfg.PaymentGatewayAuth = viper.GetString("PAYMENT_GATEWAY_AUTH")
+	cfg.PaymentGatewayToken = viper.GetString("PAYMENT_GATEWAY_TOKEN")
 	cfg.RedisHost = viper.GetString("REDIS_HOST")
 	cfg.RedisPort = viper.GetString("REDIS_PORT")
 }

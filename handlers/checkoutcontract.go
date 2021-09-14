@@ -2,7 +2,7 @@ package handlers
 
 import "context"
 
-// HandlerContract interface
-type HandlerContract interface {
+// CheckoutContract handler to process payments
+type CheckoutContract interface {
 	Handle(ctx context.Context, params interface{}) (string, error)
 }

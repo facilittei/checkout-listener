@@ -24,10 +24,14 @@ func NewAuthRedis(ctx context.Context, db *redis.Client) AuthContract {
 // GetToken authentication stored in redis
 func (authRedis *AuthRedis) GetToken() (string, error) {
 	result, err := authRedis.DB.Get(authRedis.Ctx, "token").Result()
-	if err != nil {
+	switch {
+	case err == redis.Nil:
+		return "", nil
+	case err != nil:
 		return "", err
+	default:
+		return result, nil
 	}
-	return result, nil
 }
 
 // StoreToken authentication in redis

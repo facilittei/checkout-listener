@@ -19,7 +19,7 @@ type Checkout struct {
 }
 
 // NewCheckout creates a new instance of a checkout handler
-func NewCheckout(messageGtw gateways.MessageContract, paymentSrv services.PaymentContract) *Checkout {
+func NewCheckout(messageGtw gateways.MessageContract, paymentSrv services.PaymentContract) HandlerContract {
 	return &Checkout{
 		MessageGtw: messageGtw,
 		PaymentSrv: paymentSrv,

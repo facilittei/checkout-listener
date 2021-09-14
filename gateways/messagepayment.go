@@ -13,7 +13,7 @@ import (
 type SQS struct{}
 
 // NewSQS creates a new listener instance
-func NewSQS() *SQS {
+func NewSQS() MessageContract {
 	return &SQS{}
 }
 

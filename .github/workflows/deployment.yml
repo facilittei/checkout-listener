@@ -31,3 +31,4 @@ jobs:
           aws_region: ${{ secrets.AWS_REGION }}
           function_name: lambda-checkout-facilittei-${{ env.ENVIRONMENT }}
           zip_file: main.zip
+          environment: PAYMENT_GATEWAY_URL=${{ secrets.PAYMENT_GATEWAY_URL }},REDIS_HOST=${{ secrets.REDIS_HOST }},REDIS_PORT=${{ secrets.REDIS_PORT }}

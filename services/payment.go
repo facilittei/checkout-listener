@@ -12,16 +12,16 @@ import (
 // Payment gateway
 type Payment struct {
 	Config         config.Config
-	HTTPHandler    adapters.HTTP
+	HTTPHandler    adapters.HTTPContract
 	AuthRepository repositories.AuthContract
 }
 
 // NewPayment creates a new instance of a payment intent
 func NewPayment(
 	config config.Config,
-	httpHandler adapters.HTTP,
+	httpHandler adapters.HTTPContract,
 	authRepository repositories.AuthContract,
-) *Payment {
+) PaymentContract {
 	return &Payment{
 		Config:         config,
 		HTTPHandler:    httpHandler,

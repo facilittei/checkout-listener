@@ -8,7 +8,7 @@ type HTTPResty struct {
 }
 
 // NewHTTPResty creates a new instance of a HTTPResty adapter
-func NewHTTPResty() *HTTPResty {
+func NewHTTPResty() HTTPContract {
 	return &HTTPResty{
 		Client: resty.New(),
 	}

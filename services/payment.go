@@ -1,6 +1,7 @@
 package services
 
 import (
+	"encoding/json"
 	"log"
 
 	"github.com/facilittei/checkout-listener/adapters"
@@ -40,7 +41,10 @@ func (paymentSvc Payment) Process(payment models.Payment) error {
 	if err != nil {
 		return err
 	}
-	log.Println(res)
+
+	var chargeResponse models.ChargeResponse
+	json.Unmarshal(res, &chargeResponse)
+	log.Printf("%+v", chargeResponse)
 
 	return nil
 }

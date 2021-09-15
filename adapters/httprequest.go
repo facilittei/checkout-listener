@@ -40,7 +40,7 @@ func (httpRequest *HTTPRequest) Post(url string, body interface{}, headers map[s
 
 	defer resp.Body.Close()
 
-	content, err := ioutil.ReadAll(req.Body)
+	content, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return nil, handleError(err, "error trying read response")
 	}

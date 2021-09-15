@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	authPath = "/authorization-server/oauth/token"
+	authPath = "/authorization-server/oauth/token?grant_type=client_credentials"
 )
 
 // AuthHandler authenticates the application
@@ -62,7 +62,7 @@ func (auth *AuthHandler) GetCredentials() (map[string]string, error) {
 func (auth *AuthHandler) getAuthorizationHeaders() map[string]string {
 	headers := make(map[string]string)
 	headers["Content-Type"] = "application/x-www-form-urlencoded"
-	headers["Authorization"] = fmt.Sprintf("Bearer %s", auth.Config.PaymentGatewayAuth)
+	headers["Authorization"] = fmt.Sprintf("Basic %s", auth.Config.PaymentGatewayAuth)
 	return headers
 }
 

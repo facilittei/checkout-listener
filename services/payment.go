@@ -8,6 +8,10 @@ import (
 	"github.com/facilittei/checkout-listener/models"
 )
 
+const (
+	newChargePath = "/api-integration/charges"
+)
+
 // Payment gateway
 type Payment struct {
 	Config      config.Config
@@ -29,6 +33,14 @@ func NewPayment(
 
 // Process payment
 func (paymentSvc Payment) Process(payment models.Payment) error {
-	log.Println(payment)
+	log.Println("payment.Process")
+
+	url := paymentSvc.Config.PaymentGatewayURL + newChargePath
+	res, err := paymentSvc.HTTPHandler.Post(url, payment, paymentSvc.Headers)
+	if err != nil {
+		return err
+	}
+	log.Println(res)
+
 	return nil
 }

@@ -35,8 +35,6 @@ func main() {
 	authToken := handlers.NewAuth(cfg, httpHandler, authRepository)
 
 	headers, err := authToken.GetCredentials()
-	log.Print("Main.headers")
-	log.Println(headers)
 	if err != nil {
 		log.Fatal(err)
 	}

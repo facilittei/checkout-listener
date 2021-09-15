@@ -44,7 +44,7 @@ func (paymentSvc Payment) Process(payment models.Payment) error {
 
 	var chargeResponse models.ChargeResponse
 	json.Unmarshal(res, &chargeResponse)
-	log.Printf("%+v", chargeResponse)
+	log.Printf("%+v", chargeResponse.Embedded.Charges[0])
 
 	return nil
 }

@@ -28,9 +28,11 @@ func NewCheckout(messageGtw gateways.MessageContract, paymentSrv services.Paymen
 
 // Handle events requests
 func (checkoutHandler *Checkout) Handle(ctx context.Context, params interface{}) (string, error) {
+	log.Print("Handle.params:")
 	log.Println(params)
 	payments := checkoutHandler.MessageGtw.GetPayments(params)
 	for _, payment := range payments {
+		log.Print("Handle.payment:")
 		log.Printf("%+v", &payment)
 		checkoutHandler.PaymentSrv.Process(payment)
 	}

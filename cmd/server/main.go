@@ -33,6 +33,8 @@ func main() {
 	messageGtw := gateways.NewSQS()
 	authRepository := repositories.NewAuthRedis(ctx, rdb)
 	authToken := handlers.NewAuth(cfg, httpHandler, authRepository)
+	log.Print("Main.authToken")
+	log.Println(authToken)
 
 	headers, err := authToken.GetCredentials()
 	if err != nil {

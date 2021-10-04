@@ -37,7 +37,7 @@ func (paymentSvc Payment) Process(payment models.PaymentRequest) error {
 	log.Println("payment.Process")
 
 	url := paymentSvc.Config.PaymentGatewayURL + newChargePath
-	res, err := paymentSvc.HTTPHandler.Post(url, payment, paymentSvc.Headers)
+	res, err := paymentSvc.HTTPHandler.Post(url, payment.Payment, paymentSvc.Headers)
 	if err != nil {
 		return err
 	}

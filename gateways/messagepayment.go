@@ -18,21 +18,21 @@ func NewSQS() MessageContract {
 }
 
 // GetPayments SQS messages
-func (sqs *SQS) GetPayments(params interface{}) []models.Payment {
-	var payments []models.Payment
+func (sqs *SQS) GetPayments(params interface{}) []models.PaymentRequest {
+	var paymentsRequest []models.PaymentRequest
 	var sqsEvent events.SQSEvent
 
 	err := mapstructure.Decode(params, &sqsEvent)
 	if err != nil {
 		log.Printf("could not decode message interface: %v", err)
-		return payments
+		return paymentsRequest
 	}
 
 	for _, message := range sqsEvent.Records {
-		var payment models.Payment
-		json.Unmarshal([]byte(message.Body), &payment)
-		payments = append(payments, payment)
+		var paymentRequest models.PaymentRequest
+		json.Unmarshal([]byte(message.Body), &paymentRequest)
+		paymentsRequest = append(paymentsRequest, paymentRequest)
 	}
 
-	return payments
+	return paymentsRequest
 }

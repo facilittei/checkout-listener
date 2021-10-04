@@ -33,7 +33,7 @@ func NewPayment(
 }
 
 // Process payment
-func (paymentSvc Payment) Process(payment models.Payment) error {
+func (paymentSvc Payment) Process(payment models.PaymentRequest) error {
 	log.Println("payment.Process")
 
 	url := paymentSvc.Config.PaymentGatewayURL + newChargePath

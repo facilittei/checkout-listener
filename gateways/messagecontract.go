@@ -6,5 +6,5 @@ import (
 
 // MessageContract that has the payment checkout request
 type MessageContract interface {
-	GetPayments(params interface{}) []models.Payment
+	GetPayments(params interface{}) []models.PaymentRequest
 }
